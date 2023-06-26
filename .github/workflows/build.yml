@@ -17,15 +17,18 @@ jobs:
       - name: Extract tag info
         id: extract_tag
         run: |
-          echo ${GITHUB_REF} 
           TAG_NAME=${GITHUB_REF#refs/tags/} 
-          echo "tag_name=${TAG_NAME}" >> "$GITHUB_ENV" 
+          echo "tag_name=${TAG_NAME}" >> "$GITHUB_ENV"
+          echo ${TAG_NAME}
           APP_ENVIRONMENT=${TAG_NAME%-*} 
           echo "app_environment=${APP_ENVIRONMENT}" >> "$GITHUB_ENV" 
+          echo ${APP_ENVIRONMENT}
           APP=${APP_ENVIRONMENT%-*} 
           echo "app=${APP}" >> "$GITHUB_ENV" 
+          echo ${APP}
           ENVIRONMENT=${APP_ENVIRONMENT#*-} 
           echo "environment=${ENVIRONMENT}" >> "$GITHUB_ENV"
+          echo ${ENVIRONMENT}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to DockerHub

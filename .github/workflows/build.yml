@@ -21,10 +21,12 @@ jobs:
           APP_ENVIRONMENT=${TAG_NAME%-*}
           APP=${APP_ENVIRONMENT%-*}
           ENVIRONMENT=${APP_ENVIRONMENT#*-}
-          echo ::set-output name=tag_name::${TAG_NAME}
-          echo ::set-output name=app_environment::${APP_ENVIRONMENT}
-          echo ::set-output name=app::${APP}
-          echo ::set-output name=environment::${ENVIRONMENT}
+          echo "tag_name=${TAG_NAME}" >> "$GITHUB_ENV"
+          echo "app_environment=${APP_ENVIRONMENT}" >> "$GITHUB_ENV"
+          echo "app=${APP}" >> "$GITHUB_ENV"
+          echo "environment=${ENVIRONMENT}" >> "$GITHUB_ENV"
+
+          echo "action_state=yellow" >> "$GITHUB_ENV"
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to DockerHub
@@ -37,4 +39,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.extract_tag.outputs.app_environment }}:${{ steps.extract_tag.outputs.tag_name }}
+          tags: ${{ env.app_environment }}:${{ steps.extract_tag.outputs.tag_name }}

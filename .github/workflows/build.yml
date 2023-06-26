@@ -3,7 +3,7 @@ name: Build + Push Frontend
 on:
   push:
     tags:
-      - "frontend-*:*.*.*"
+      - "frontend-*-*.*.*"
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
         id: extract_tag
         run: |
           TAG_NAME=${GITHUB_REF#refs/tags/}
-          APP_ENVIRONMENT=${TAG_NAME%:*}
+          APP_ENVIRONMENT=${TAG_NAME%-*}
           APP=${APP_ENVIRONMENT%-*}
           ENVIRONMENT=${APP_ENVIRONMENT#*-}
           echo ::set-output name=tag_name::${TAG_NAME}

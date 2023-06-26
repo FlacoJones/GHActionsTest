@@ -29,6 +29,9 @@ jobs:
           ENVIRONMENT=${APP_ENVIRONMENT#*-} 
           echo "environment=${ENVIRONMENT}" >> "$GITHUB_ENV"
           echo ${ENVIRONMENT}
+          VERSION=${TAG_NAME#*-}
+          echo "version=${VERSION}" >> "$GITHUB_ENV"
+          echo ${VERSION}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to DockerHub

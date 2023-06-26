@@ -18,16 +18,12 @@ jobs:
         id: extract_tag
         run: |
           echo ${GITHUB_REF}
-
           TAG_NAME=${GITHUB_REF#refs/tags/}
           echo "tag_name=${TAG_NAME}" >> "$GITHUB_ENV"
-
           APP_ENVIRONMENT=${TAG_NAME%-*}
           echo "app_environment=${APP_ENVIRONMENT}" >> "$GITHUB_ENV"
-
           APP=${APP_ENVIRONMENT%-*}
           echo "app=${APP}" >> "$GITHUB_ENV"
-
           ENVIRONMENT=${APP_ENVIRONMENT#*-}
           echo "environment=${ENVIRONMENT}" >> "$GITHUB_ENV"
       - name: Set up Docker Buildx
@@ -42,4 +38,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.app_environment }}:${{ env.tag_name }}
+          tags: openq/${{ env.tag_name }}

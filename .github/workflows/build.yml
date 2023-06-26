@@ -5,6 +5,7 @@ on: push
 jobs:
   build:
     name: Build frontend
+    environment: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
